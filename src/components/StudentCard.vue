@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { EventItem } from "@/type";
+import type { StudentItem } from "@/type";
 import type { PropType } from "vue";
+
 const prop = defineProps({
-    event:{
-        type: Object as PropType<EventItem>,
+    student:{
+        type: Object as PropType<StudentItem>,
             require: true
     }
 })
@@ -13,16 +14,16 @@ const prop = defineProps({
 
 <template>
   <div class="event-class">
-    <div class="event-card">
-      <span>@{{ event?.time }} on {{ event?.date }}</span>
-      <h4>{{ event?.title }}</h4>
+    <div class="student-card">
+      <span>@{{ student?.name }}  {{ student?.surname }}</span>
+      <h4>{{ student?.gpa }}</h4>
     </div>
   </div>
 </template>
 
 
 <style scoped>
-.event-card {
+.student-card {
   padding: 20px;
   width: 250px;
   cursor: pointer;
@@ -30,7 +31,7 @@ const prop = defineProps({
   margin-bottom: 18px;
 }
 
-.event-card:hover {
+.student-card:hover {
   transform: scale(1.01);
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
 }

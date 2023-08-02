@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import EventListView from "../views/EventListView.vue"
 import AboutView from "../views/AboutView.vue"
 import CatOrgView from "../views/CatOrgView.vue"
+import StudentView from "../views/StudentView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,12 @@ const router = createRouter({
       path: '/CategoryOrganizer',
       name: 'CategoryOrganizer',
       component: CatOrgView
+    }
+    ,
+    {
+      path: '/student',
+      name: 'StudentList',
+      component: StudentView
     }
   ]
 })
