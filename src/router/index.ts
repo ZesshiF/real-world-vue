@@ -34,21 +34,29 @@ const router = createRouter({
     },
     {
       path: '/event/:id',
-      name: 'event-detail',
-      component: EventDetailView,
-      props: true
-    },
-    {
-      path: '/event/:id/edit',
-      name: 'event-edit',
-      component: EventEditView,
-      props: true
-    },
-    {
-      path: '/event/:id/register',
-      name: 'event-register',
-      component: EventRegisterView,
-      props: true
+      name: 'event-layout',
+      component: EventLayoutView,
+      props: true,
+      children: [
+        {
+          path: '',
+          name: 'event-detail',
+          component: EventDetailView,
+          props: true
+        },
+        {
+          path: 'edit',
+          name: 'event-edit',
+          component: EventEditView,
+          props: true
+        },
+        {
+          path: 'register',
+          name: 'event-register',
+          component: EventRegisterView,
+          props: true
+        }
+      ]
     }
 
   ]
