@@ -2,13 +2,13 @@
 import { ref } from 'vue'
 import { type EventItem } from '@/type'
 import EventService from '@/services/EventService'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const event = ref<EventItem | null>(null)
 const props = defineProps({
   id: String
 })
-const router = useRoute()
+const router = useRouter()
 
 // eslint-disable-next-line vue/no-setup-props-destructure
 EventService.getEventById(Number(props.id))

@@ -19,7 +19,7 @@ const props = defineProps({
   }
 })
 
-const router = useRouter
+const router = useRouter()
 // eslint-disable-next-line vue/no-setup-props-destructure
 const limit = ref(props.limit)
 
