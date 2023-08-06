@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useMessageStore } from '@/stores/message'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 
 const store = useMessageStore()
 const { message } = storeToRefs(store)
@@ -10,8 +10,8 @@ const { message } = storeToRefs(store)
 <template>
   <header>
     <div id="flashMessage" v-if="message">
-    <h4>{{ message }}</h4>
-  </div>
+      <h4>{{ message }}</h4>
+    </div>
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
