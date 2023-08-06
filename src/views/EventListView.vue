@@ -29,10 +29,16 @@ const hasNextPage = computed(() => {
   return props.page.valueOf() < totalPages
 })
 
-// const increaseLimit = () =>{
-//   limit.value++
-//   router.push({ name: 'event-list', query: { page: props.page, limit: limit.value }})
-// }
+const increaseLimit = () =>{
+  limit.value++
+  router.push({ name: 'event-list', query: { page: props.page, limit: limit.value }})
+}
+const decreaseLimit = () =>{
+  if(limit.value > 1){
+    limit.value--
+    router.push({ name: 'event-list', query: { page: props.page, limit: limit.value }})
+  } 
+}
 
 watchEffect(() => {
   EventService.getEvent(2, props.page).then((response: AxiosResponse<EventItem[]>) => {
@@ -43,13 +49,17 @@ watchEffect(() => {
 </script>
 
 <template>
-  <h1>Events For Good</h1>
+  <h1>Events For Good
+    <button @click="increaseLimit">+</button>
+    <button @click="decreaseLimit">-</button>
+    {{ limit }}
+  </h1>
   <main class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event"></EventCard>
 
     <div class="pagination">
       <RouterLink
-        :to="{ name: 'event-list', query: { page: page - 1 } }"
+        :to="{ name: 'event-list', query: { page: page - 1, limit: limit } }"
         rel="prev"
         v-if="page != 1"
         id="page-prev"
@@ -57,7 +67,7 @@ watchEffect(() => {
         Prev Page
       </RouterLink>
       <RouterLink
-        :to="{ name: 'event-list', query: { page: page + 1 } }"
+        :to="{ name: 'event-list', query: { page: page + 1, limit:limit } }"
         rel="next"
         v-if="hasNextPage"
         id="page-next"
