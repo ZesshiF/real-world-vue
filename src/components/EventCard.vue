@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import type { EventItem } from "@/type";
-import type { PropType } from "vue";
+import type { EventItem } from '@/type'
+import type { PropType } from 'vue'
 const prop = defineProps({
-    event:{
-        type: Object as PropType<EventItem>,
-            require: true
-    }
+  event: {
+    type: Object as PropType<EventItem>,
+    require: true
+  }
 })
-
 </script>
 
-
 <template>
-  <RouterLink class="event-link" :to="{name: 'event-detail', params:{id: event?.id}}">
+  <RouterLink class="event-link" :to="{ name: 'event-detail', params: { id: event?.id } }">
     <div class="event-class">
       <div class="event-card">
         <span>@{{ event?.time }} on {{ event?.date }}</span>
@@ -21,7 +19,6 @@ const prop = defineProps({
     </div>
   </RouterLink>
 </template>
-
 
 <style scoped>
 .event-card {
@@ -36,8 +33,8 @@ const prop = defineProps({
   transform: scale(1.01);
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
 }
-.event-link{
-  color:#2c3e50;
+.event-link {
+  color: #2c3e50;
   text-decoration: none;
 }
 </style>

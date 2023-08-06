@@ -1,26 +1,23 @@
 <script setup lang="ts">
-import type { StudentItem } from "@/type";
-import type { PropType } from "vue";
+import type { StudentItem } from '@/type'
+import type { PropType } from 'vue'
 
 const prop = defineProps({
-    student:{
-        type: Object as PropType<StudentItem>,
-            require: true
-    }
+  student: {
+    type: Object as PropType<StudentItem>,
+    require: true
+  }
 })
-
 </script>
-
 
 <template>
   <div class="event-class">
     <div class="student-card">
-      <span>@{{ student?.name }}  {{ student?.surname }}</span>
+      <span>{{ student?.name }} {{ student?.surname }}</span>
       <h4>{{ student?.gpa }}</h4>
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .student-card {
