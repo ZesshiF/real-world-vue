@@ -1,7 +1,7 @@
 <template>
   <div class="event-class">
     <div class="event-card">
-      <span>@{{ event.category }} on {{ event.organizer }}</span>
+      <span>@{{ event?.category }} on {{ event?.organizer }}</span>
     </div>
   </div>
 </template>

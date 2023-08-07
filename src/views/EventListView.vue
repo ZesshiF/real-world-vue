@@ -3,10 +3,10 @@ import EventCard from '../components/EventCard.vue'
 import type { EventItem } from '@/type'
 import { ref, watchEffect, type Ref, computed } from 'vue'
 import EventService from '@/services/EventService'
-import type { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios'
 import { useRouter } from 'vue-router'
 import NProgress from 'nprogress'
-import { onBeforeRouteUpdate } from 'vue-router';
+import { onBeforeRouteUpdate } from 'vue-router'
 
 const events: Ref<Array<EventItem>> = ref([])
 
@@ -18,8 +18,7 @@ const props = defineProps({
   page: {
     type: Number,
     required: true
-  }
-  ,
+  },
   limit: {
     type: Number,
     required: true
@@ -27,67 +26,78 @@ const props = defineProps({
 })
 
 // eslint-disable-next-line vue/no-setup-props-destructure, vue/no-dupe-keys
-let limit = 1;
+let limit = 3
 
 const increaseLimit = () => {
-  limit++;
-  router.push({ name: 'event-list', query: { page: props.page, limit: limit } })
-}
-
-const decreaseLimit = () => {
-  if (limit > 1) {
-    limit--;
+  if (limit < 4) {
+    limit++
     router.push({ name: 'event-list', query: { page: props.page, limit: limit } })
   }
 }
 
+const decreaseLimit = () => {
+  if (limit > 1) {
+    limit--
+    router.push({ name: 'event-list', query: { page: props.page, limit: limit } })
+  }
+}
 
 // eslint-disable-next-line vue/no-setup-props-destructure
-EventService.getEvent(limit, props.page).then((response: AxiosResponse<EventItem[]>) => {
-  events.value = response.data
-  totalEvent.value = response.headers['x-total-count']
-}).catch(() => {
-  router.push({ name: 'NetworkError' })
-})
+EventService.getEvent(limit, props.page)
+  .then((response: AxiosResponse<EventItem[]>) => {
+    events.value = response.data
+    totalEvent.value = response.headers['x-total-count']
+  })
+  .catch(() => {
+    router.push({ name: 'NetworkError' })
+  })
 
 onBeforeRouteUpdate((to, from, next) => {
   const toPage = Number(to.query.page)
-  EventService.getEvent(limit, toPage).then((response: AxiosResponse<EventItem[]>) => {
-    events.value = response.data
-    totalEvent.value = response.headers['x-total-count']
-    next()
-  }).catch(() => {
-    next({ name: 'NetworkError' })
-  })
+  EventService.getEvent(limit, toPage)
+    .then((response: AxiosResponse<EventItem[]>) => {
+      events.value = response.data
+      totalEvent.value = response.headers['x-total-count']
+      next()
+    })
+    .catch(() => {
+      next({ name: 'NetworkError' })
+    })
 })
 
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvent.value / 3)
+  const totalPages = Math.ceil(totalEvent.value / limit)
   return props.page.valueOf() < totalPages
 })
-
-</script> 
+</script>
 
 <template>
-  <h1>Events For Good 
+  <h1>
+    Events For Good
     <button @click="increaseLimit">+</button>
     <button @click="decreaseLimit">-</button>
-    {{ limit }}
   </h1>
-  
+
   <main class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event"></EventCard>
     <div class="pagination">
-      <RouterLink :to="{ name: 'event-list', query: { page: page - 1, limit: limit } }" rel="prev" v-if="page != 1"
-        id="page-prev"> Prev
-        Page
+      <RouterLink
+        :to="{ name: 'event-list', query: { page: page - 1 } }"
+        rel="prev"
+        v-if="page != 1"
+        id="page-prev"
+      >
+        Prev Page
       </RouterLink>
-      <RouterLink :to="{ name: 'event-list', query: { page: page + 1, limit: limit } }" rel="next" v-if="hasNextPage"
-        id="page-next">
+      <RouterLink
+        :to="{ name: 'event-list', query: { page: page + 1 } }"
+        rel="next"
+        v-if="hasNextPage"
+        id="page-next"
+      >
         Next Page
       </RouterLink>
     </div>
-
   </main>
 </template>
 
