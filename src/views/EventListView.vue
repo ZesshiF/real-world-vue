@@ -26,24 +26,24 @@ const props = defineProps({
   }
 })
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const limit = ref(props.limit)
+// eslint-disable-next-line vue/no-setup-props-destructure, vue/no-dupe-keys
+let limit = 1;
 
 const increaseLimit = () => {
-  limit.value++;
-  router.push({ name: 'event-list', query: { page: props.page, limit: limit.value } })
+  limit++;
+  router.push({ name: 'event-list', query: { page: props.page, limit: limit } })
 }
 
 const decreaseLimit = () => {
-  if (limit.value > 1) {
-    limit.value--;
-    router.push({ name: 'event-list', query: { page: props.page, limit: limit.value } })
+  if (limit > 1) {
+    limit--;
+    router.push({ name: 'event-list', query: { page: props.page, limit: limit } })
   }
 }
 
 
 // eslint-disable-next-line vue/no-setup-props-destructure
-EventService.getEvent(3, props.page).then((response: AxiosResponse<EventItem[]>) => {
+EventService.getEvent(limit, props.page).then((response: AxiosResponse<EventItem[]>) => {
   events.value = response.data
   totalEvent.value = response.headers['x-total-count']
 }).catch(() => {
@@ -52,7 +52,7 @@ EventService.getEvent(3, props.page).then((response: AxiosResponse<EventItem[]>)
 
 onBeforeRouteUpdate((to, from, next) => {
   const toPage = Number(to.query.page)
-  EventService.getEvent(3, toPage).then((response: AxiosResponse<EventItem[]>) => {
+  EventService.getEvent(limit, toPage).then((response: AxiosResponse<EventItem[]>) => {
     events.value = response.data
     totalEvent.value = response.headers['x-total-count']
     next()
