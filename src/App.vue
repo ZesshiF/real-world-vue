@@ -8,7 +8,7 @@ const { message } = storeToRefs(store)
 </script>
 
 <template>
-  <header>
+  <header class="max-h-screen leading-normal">
     <div id="flashMessage" v-if="message">
       <h4>{{ message }}</h4>
     </div>
@@ -43,11 +43,6 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
-}
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
 }
 
 .logo {
