@@ -85,7 +85,7 @@ const hasNextPage = computed(() => {
         :to="{ name: 'event-list', query: { page: page - 1 } }"
         rel="prev"
         v-if="page != 1"
-        class=" text-left text-gray-700 no-underline"
+        class="text-left text-gray-700 no-underline"
       >
         Prev Page
       </RouterLink>
@@ -93,7 +93,7 @@ const hasNextPage = computed(() => {
         :to="{ name: 'event-list', query: { page: page + 1 } }"
         rel="next"
         v-if="hasNextPage"
-        class=" text-right text-gray-700 no-underline"
+        class="text-right text-gray-700 no-underline"
       >
         Next Page
       </RouterLink>
@@ -101,6 +101,4 @@ const hasNextPage = computed(() => {
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

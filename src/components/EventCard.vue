@@ -10,7 +10,10 @@ const prop = defineProps({
 </script>
 
 <template>
-  <RouterLink class="text-gray-700 no-underline" :to="{ name: 'event-detail', params: { id: event?.id } }">
+  <RouterLink
+    class="text-gray-700 no-underline"
+    :to="{ name: 'event-detail', params: { id: event?.id } }"
+  >
     <div class="mb-4">
       <div class="event-card">
         <span>@{{ event?.time }} on {{ event?.date }}</span>
