@@ -78,7 +78,7 @@ const hasNextPage = computed(() => {
     <button @click="decreaseLimit">-</button>
   </h1>
 
-  <main class="events">
+  <main class="flex flex-col item-center">
     <EventCard v-for="event in events" :key="event.id" :event="event"></EventCard>
     <div class="pagination">
       <RouterLink
@@ -102,11 +102,6 @@ const hasNextPage = computed(() => {
 </template>
 
 <style scoped>
-.events {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .pagination {
   display: flex;
