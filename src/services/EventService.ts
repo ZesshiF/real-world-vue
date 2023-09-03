@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosResponse } from 'axios'
 import type { EventItem } from '@/type'
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:3004',
+  baseURL: 'http://localhost:8080',
   withCredentials: false,
   headers: {
     Accept: 'application/json',
