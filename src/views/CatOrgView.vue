@@ -1,45 +1,58 @@
 <script setup lang="ts">
 import CatOrgCard from '../components/CatOrg.vue'
-import type { EventItem } from '@/type'
+import type { OrganizerItem } from '@/type'
+import { ref, type Ref, computed } from 'vue'
+import OrganizeService from '@/services/OrganizeService'
+import type { AxiosResponse } from 'axios'
+import { useRouter } from 'vue-router'
+import { onBeforeRouteUpdate } from 'vue-router'
 
-import { ref } from 'vue'
-const events = ref<EventItem[]>([
-  {
-    id: 5928101,
-    category: 'animal welfare',
-    title: 'Cat Adoption Day',
-    description: 'Find your new feline friend at this event.',
-    location: 'Meow Town',
-    date: 'January 28, 2022',
-    time: '12:00',
-    organizer: 'Kat Laydee'
+const organizers = ref<Array<OrganizerItem>>([])
+const router = useRouter()
+const totalEvent = ref<number>(0)
+
+const props = defineProps({
+  page: {
+    type: Number,
+    required: true
   },
-  {
-    id: 4582797,
-    category: 'food',
-    title: 'Community Gardening',
-    description: 'Join us as we tend to the community edible plants.',
-    location: 'Flora City',
-    date: 'March 14, 2022',
-    time: '10:00',
-    organizer: 'Fern Pollin'
-  },
-  {
-    id: 8419988,
-    category: 'sustainability',
-    title: 'Beach Cleanup',
-    description: 'Help pick up trash along the shore.',
-    location: 'Playa Del Carmen',
-    date: 'July 22, 2022',
-    time: '11:00',
-    organizer: 'Carey Wales'
+  limit: {
+    type: Number,
+    required: true
   }
-])
+})
+
+OrganizeService.getEvent(4, props.page)
+  .then((response: AxiosResponse<OrganizerItem[]>) => {
+    organizers.value = response.data
+    totalEvent.value = response.headers['x-total-count']
+  })
+  .catch(() => {
+    router.push({ name: 'NetworkError' })
+  })
+
+onBeforeRouteUpdate((to, from, next) => {
+  const toPage = Number(to.query.page)
+  OrganizeService.getEvent(4, toPage)
+    .then((response: AxiosResponse<OrganizerItem[]>) => {
+      organizers.value = response.data
+      totalEvent.value = response.headers['x-total-count']
+      next()
+    })
+    .catch(() => {
+      next({ name: 'NetworkError' })
+    })
+})
+
+const hasNextPage = computed(() => {
+  const totalPages = Math.ceil(totalEvent.value / 4)
+  return props.page.valueOf() < totalPages
+})
 </script>
 
 <template>
   <main class="events">
-    <CatOrgCard v-for="event in events" :key="event.id" :event="event"></CatOrgCard>
+    <CatOrgCard v-for="organize in organizers" :key="organize.id" :event="organize"></CatOrgCard>
   </main>
 </template>
 

@@ -1,21 +1,24 @@
+ <script setup lang="ts">
+      import type { OrganizerItem } from '@/type'
+      import type { PropType } from 'vue'
+      const prop = defineProps({
+        organize: {
+          type: Object as PropType<OrganizerItem>,
+          require: true
+        }
+      })
+ </script>
+
+
 <template>
   <div class="event-class">
     <div class="event-card">
-      <span>@{{ event?.category }} on {{ event?.organizer }}</span>
+      <span>{{ organize?.id}} {{ organize?.location }}</span>
+      <h4>{{ organize?.organizer }}</h4>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import type { EventItem } from '@/type'
-import type { PropType } from 'vue'
-const prop = defineProps({
-  event: {
-    type: Object as PropType<EventItem>,
-    require: true
-  }
-})
-</script>
 
 <style scoped>
 .event-card {

@@ -28,9 +28,10 @@ const router = createRouter({
       component: AboutView
     },
     {
-      path: '/CategoryOrganizer',
-      name: 'CategoryOrganizer',
-      component: CatOrgView
+      path: '/organizer',
+      name: 'organizer',
+      component: CatOrgView,
+      props: (route) => ({ page: parseInt((route.query?.page as string) || '1') })
     },
     {
       path: '/student',

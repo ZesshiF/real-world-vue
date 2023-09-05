@@ -19,3 +19,9 @@ export interface StudentItem {
   penAmount: string
   description: string
 }
+
+export interface OrganizerItem {
+  id: number
+  location: string
+  organizer: string
+}
