@@ -9,13 +9,15 @@ const { message } = storeToRefs(store)
 
 <template>
   <header class="max-h-screen leading-normal">
+    <h1>642115038 Yotsawat Lekwongthansin</h1>
     <div id="flashMessage" v-if="message">
       <h4>{{ message }}</h4>
     </div>
     <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/organizer">Category&Organizer</RouterLink>
+      <router-link :to="{ name: 'about' }">About</router-link> |
+    <router-link :to="{ name: 'add-event' }">New Event</router-link>
+      <RouterLink to="/CategoryOrganizer">Category&Organizer</RouterLink>
       <RouterLink to="/student">Student</RouterLink>
     </nav>
   </header>
@@ -24,6 +26,11 @@ const { message } = storeToRefs(store)
 </template>
 
 <style>
+
+body {
+background-color: lightblue;
+}
+
 #app {
   font-family: Avenir, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
