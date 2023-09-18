@@ -1,6 +1,31 @@
 <script setup lang="ts">
 import type { EventItem } from '@/type'
+import EventService from '@/services/EventService'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { useMessageStore } from '@/stores/message'
+const store = useMessageStore()
+
+
+const router = useRouter()
+function saveEvent() {
+  EventService.saveEvent(event.value)
+    .then((response) => {
+      console.log(response.data)
+      router.push({
+        name: 'event-detail',
+        params: { id: response.data.id }
+      })
+      store.updateMessage('You are successfully add a new event for ' + response.data.title)
+           setTimeout(() => {
+                store.resetMessage()
+            }, 3000)
+    })
+    .catch(() => {
+      router.push({ name: 'network-error' })
+    })
+}
+
 const event = ref<EventItem>({
   id: 0,
   category: '',
@@ -15,7 +40,7 @@ const event = ref<EventItem>({
 <template>
   <div>
     <h1>Create an event</h1>
-    <form>
+    <form @submit.prevent="saveEvent">
       <label>Category</label>
       <input v-model="event.category" type="text" placeholder="Category" class="field" />
       <h3>Name & describe your event</h3>
@@ -36,8 +61,6 @@ const event = ref<EventItem>({
     <pre>{{ event }}</pre>
   </div>
 </template>
-
-
 
 <style scoped>
 b,
@@ -63,7 +86,9 @@ small {
   color: rgba(0, 0, 0, 0.5);
 }
 .-shadow {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.13);
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.13);
 }
 
 button,
@@ -222,7 +247,9 @@ select::ms-expand {
 .button:hover {
   -webkit-transform: scale(1.02);
   transform: scale(1.02);
-  box-shadow: 0 7px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 7px 17px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .button:active {
   -webkit-transform: scale(1);
@@ -269,4 +296,3 @@ select::ms-expand {
   padding: 0 20px;
 }
 </style>
-
