@@ -15,7 +15,8 @@ const { message } = storeToRefs(store)
     </div>
     <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <router-link :to="{ name: 'about' }">About</router-link> |
+    <router-link :to="{ name: 'add-event' }">New Event</router-link>
       <RouterLink to="/CategoryOrganizer">Category&Organizer</RouterLink>
       <RouterLink to="/student">Student</RouterLink>
     </nav>
@@ -25,6 +26,11 @@ const { message } = storeToRefs(store)
 </template>
 
 <style>
+
+body {
+background-color: lightblue;
+}
+
 #app {
   font-family: Avenir, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
